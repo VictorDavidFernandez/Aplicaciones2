@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListComponenteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">            
+            <h:form>
+                <p:toolbar style="margin-bottom: 10px; width: 70%; float: left">
+                    <f:facet name="left">
+                        <p:selectOneMenu id="unaMarca" value="#{componenteController.producto}" onchange="#{componenteController.cargarListaProductosComponente()} #{componenteController.cargarLineasPedidoCliente()} submit()">
+                            <f:selectItems value="#{productopropioController.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+                    </f:facet>
+                </p:toolbar>
+            </h:form>
+            <h:form styleClass="jsfcrud_list_form">
+                <p:dataTable var="item" value="#{componenteController.listaProductosComponente}" rows="5" style="width: 45%; float:left;"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,15">
+
+                    <p:column headerText="Cod. componente" sortBy="#{item.componente.codComponente}" width="45">
+                        <h:outputText value="#{item.componente.codComponente}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                    <p:column headerText="Descripción" sortBy="#{item.componente.descripcion}" width="45">
+                        <h:outputText value="#{item.componente.descripcion}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                    <p:column headerText="Unidades" sortBy="#{item.unidades}" width="45">
+                        <h:outputText value="#{item.unidades}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
+            <h:form styleClass="jsfcrud_list_form">
+                <p:dataTable var="item" value="#{componenteController.lineasPedidoCliente}" rows="5" style="width: 45%; float:right;"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,15">
+
+                    <p:column headerText="Cliente" sortBy="#{item.codPedidoCliente.codCliente.nomCliente}" width="45">
+                        <h:outputText value="#{item.codPedidoCliente.codCliente.nomCliente}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                    <p:column headerText="Cantidad" sortBy="#{item.cantidad}" width="45">
+                        <h:outputText value="#{item.cantidad}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                    <p:column headerText="Fecha" sortBy="#{item.codPedidoCliente.fecha}" width="45">
+                        <h:outputText value="#{item.codPedidoCliente.fecha}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
+        </ui:define>
+    </ui:composition>
+
+</html>

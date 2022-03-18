@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListLineapclienteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:toolbar style="margin-bottom: 10px; width: 69%; float: left">
+                    <f:facet name="left">
+                        <p:selectOneMenu id="unCliente" value="#{pedidoproveedorController.proveedor}" onchange="#{pedidoproveedorController.cargarPedidosProveedor()} submit()">
+                            <f:selectItems value="#{proveedorController.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <f:facet name="left">
+                        <p:selectOneMenu id="unPedido" value="#{pedidoproveedorController.pedidoProveedor}" onchange="#{pedidoproveedorController.cargarLineasPedido()} submit()">
+                            <f:selectItems value="#{pedidoproveedorController.cargarDesplegablePedidos()}"/>
+                        </p:selectOneMenu>
+                    </f:facet>
+                </p:toolbar>
+            </h:form>
+
+            <h:form styleClass="jsfcrud_list_form">
+                <p:dataTable var="linea" value="#{pedidoproveedorController.lineasPedido}" rows="5" style="width: 70%; float:left;"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,15">
+
+                    <p:column headerText="ID línea" sortBy="#{linea.codLineaPP}" width="45">
+                        <h:outputText value="#{linea.codLineaPP}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                    <p:column headerText="Cantidad" sortBy="#{linea.numUnidades}" width="45">
+                        <h:outputText value="#{linea.numUnidades}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                    <p:column headerText="Cod. Componente" sortBy="#{linea.codComponente}" width="45">
+                        <h:outputText value="#{linea.codComponente}" style="font-weight: bold; color:#01579B; font-size: 18px"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
+
+        </ui:define>
+    </ui:composition>
+
+</html>
